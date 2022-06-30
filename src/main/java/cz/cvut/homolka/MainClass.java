@@ -17,12 +17,9 @@ public class MainClass {
             4. WRITE SOURCE FILE FROM WHERE WILL PROGRAM TAKE THE NUMBERS AND FILE NAME WERE YOU WANT TO STORE THE NUMBERS | EXAMPLE --> "C:\\Documents" "numbers.txt\"""";
 
 
-
     public static void main(String[] args) {
         rightInputAndBuilder();
     }
-
-    //               "C:\Games\numbers.txt"
 
     /**
      * Function checking rightness of parameters and completing needed task
@@ -30,20 +27,20 @@ public class MainClass {
     private static void rightInputAndBuilder(){
 
         boolean rightFirstParam = false;
-
         Scanner sc = new Scanner(System.in);
         String command;
         String[] splitCommand;
         String param;
         String param2;
+
         System.out.println("FOR HELP TYPE \"help\" OR \"?\" ");
 
         while(!rightFirstParam) {
-
             command = sc.nextLine();
             splitCommand = command.split(" ",2);
             param = splitCommand[0];
             param = param.trim();
+
             try{
                 param2 = splitCommand[1];
                 param2 = param2.trim();
@@ -64,7 +61,9 @@ public class MainClass {
             }
 
         }
+
         System.out.println("----END----");
+
     }
 
     /**
@@ -74,6 +73,7 @@ public class MainClass {
      * @return  If parameter is valid --> attribute without quotation marks, Else --> null
      */
     private static String linkCorrection(String param){
+
         String parameter = null;
         char c = param.charAt(0);
         int length = param.length();
@@ -82,6 +82,7 @@ public class MainClass {
         if(c == '\"' && cEnd == '\"') {
             parameter = param.replace("\"", "");
         }
+
         return parameter;
     }
 
@@ -92,6 +93,7 @@ public class MainClass {
      * @return If second param is valid --> true, otherwise --> false
      */
     private static boolean secondParamValidation(List<Integer> list, String param2){
+
         boolean rightParam = false;
 
         if(list.size()>0) {
@@ -108,8 +110,11 @@ public class MainClass {
                     System.out.println(integer);
                 }
             }
+
             rightParam = true;
+
         }
+
         return rightParam;
     }
 
@@ -123,11 +128,13 @@ public class MainClass {
         int n;
         List<Integer> lister = new ArrayList<>();
         String parameter = linkCorrection(param);
+
         if(parameter != null) {
             param = parameter;
             lister = new ArrayList<>(getIntegerListFromFileInput(param));
 
         }else{
+
             try {
                 n = Integer.parseInt(param);
                 lister = new ArrayList<>(standardInput(n));
@@ -136,7 +143,9 @@ public class MainClass {
                 System.out.println("Parameters are not valid try it again");
             }
         }
+
         return lister;
+
     }
 
     /**
@@ -145,16 +154,20 @@ public class MainClass {
      * @return list of Integers with numbers for next processing
      */
     private static List<Integer> standardInput(int n){
+
         List<Integer> list = new ArrayList<>();
 
         if (n > 0){
             Scanner scanner = new Scanner(System.in);
             int i=0;
+
             while(i < n) {
                 System.out.println("Add number: ");
+
                     try {
                         list.add(scanner.nextInt());
                         i++;
+
                     } catch (InputMismatchException exe) {
                         System.out.println("Error! Write a number");
                         scanner.next();
@@ -162,7 +175,9 @@ public class MainClass {
             }
         }else{
             System.out.println("Wrong Number! Number must bigger than 1");
+
         }
+
         return list;
     }
 
@@ -179,15 +194,19 @@ public class MainClass {
         int number;
 
         if(n % 2 == 0){
+
             for (Integer integer : list) {
                 number = integer;
+
                 if (number % 2 == 0) {
                     newList.add(number);
                 }
             }
         }else{
+
             for (Integer integer : list) {
                 number = integer;
+
                 if (number % 2 != 0) {
                     newList.add(number);
                 }
@@ -210,14 +229,15 @@ public class MainClass {
             File myObj = new File(path);
             Scanner myReader = new Scanner(myObj);
 
-                while (myReader.hasNextInt()) {
-                    list.add(myReader.nextInt());
-                }
+            while (myReader.hasNextInt()) {
+                list.add(myReader.nextInt());
+            }
 
             myReader.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("File was not found! Try it again");
+
         }
 
         return list;
@@ -234,14 +254,16 @@ public class MainClass {
         try {
             Writer out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(fileName), StandardCharsets.UTF_8));
+
             for (Integer integer : list) {
                 out.write(integer + "\n");
             }
+
             out.close();
+
         } catch (IOException e) {
             System.out.println("Input/Output error! Try it again");
+
         }
     }
-
-
 }
